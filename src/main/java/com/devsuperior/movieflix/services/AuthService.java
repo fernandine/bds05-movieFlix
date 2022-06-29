@@ -17,20 +17,19 @@ public class AuthService {
 	private UserRepository userRepository;
 
 	@Transactional(readOnly = true)
-    public User authenticated() {
-        try {
-            String username = SecurityContextHolder.getContext().getAuthentication().getName();
-            return userRepository.findByEmail(username);
-        }
-        catch (Exception e) {
-            throw new UnauthorizedException("Invalid user");
-        }
-    }
+	public User authenticated() {
+		try {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			return userRepository.findByEmail(username);
+		} catch (Exception e) {
+			throw new UnauthorizedException("Invalid user");
+		}
+	}
 
-    public void validadeMenber(Long userId){
-        User user = authenticated();
-        if(!user.hasHole("ROLE_MEMBER")){
-            throw new ResourceNotFoundException("Invalid user");
-        }
-    }
+	public void validadeMenber(Long userId) {
+		User user = authenticated();
+		if (!user.hasHole("ROLE_MEMBER")) {
+			throw new ResourceNotFoundException("Invalid user");
+		}
+	}
 }
